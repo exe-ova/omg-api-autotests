@@ -1,4 +1,5 @@
 import requests
+import json
 from config.settings import BASE_URL
 
 class HttpClient:
@@ -15,6 +16,9 @@ def log_request(response):
     print("\n--- Request info ---")
     print(f"URL: {response.request.url}")
     print(f"method: {response.request.method}")
-    print(f"body: {response.request.body}")
     print(f"status: {response.status_code}")
+    try:
+        print(f"<<< BODY: {json.dumps(response.json(), indent=2)}")
+    except:
+        print(f"<<< BODY: {response.text}")
     print("--------------------------\n")
