@@ -7,6 +7,6 @@ class HttpClient:
         self.session.headers.update({"Content-Type": "application/json"})
         self.base_url = BASE_URL
 
-    def post(self, path: str, payload: dict) -> requests.Response:
+    def get(self, path: str, params: dict = None) -> requests.Response:
         url = f"{self.base_url}{path}"
-        return self.session.post(url, json=payload)
+        return self.session.get(url, params=params)
