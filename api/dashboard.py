@@ -9,3 +9,6 @@ class DashboardApi:
 
     def get_orders (self, params: dict = None) -> requests.Response:
         return self.client.get("/orders", params=params)
+
+    def get_revenue_chart (self, params: dict = None) -> requests.Response:
+        return self.client.get("/revenue-chart", params=params)
