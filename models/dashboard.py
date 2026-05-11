@@ -22,3 +22,9 @@ class OrdersResponse(BaseModel):
     total: int
     page: int
     per_page: int
+
+class RevenueChartItem(BaseModel):
+    month: date
+    revenue: float
+
+RevenueChartResponse = List[RevenueChartItem]
