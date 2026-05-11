@@ -1,7 +1,7 @@
 import pytest
 from qase.pytest import qase
 from clients.http_client import log_request
-from models.dashboard import KPIsResponse, OrdersResponse
+from models.dashboard import OrdersResponse
 
 
 class TestGetOrders:
