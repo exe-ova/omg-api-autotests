@@ -6,8 +6,8 @@ from models.dashboard import KPIsResponse, OrdersResponse
 
 class TestGetKPIs:
 
-    @qase.id(1)
-    @qase.title("GET with default params - get (all) the data")
+    @qase.id(4)
+    @qase.title("Get Orders w/ default params - get first 20 orders")
     @pytest.mark.smoke
     def test_get_default_20_orders(self, dashboard_api):
         page_default = 1
