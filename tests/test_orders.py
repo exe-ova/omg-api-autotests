@@ -51,3 +51,25 @@ class TestGetKPIs:
         assert model.orders[0].product == product
         assert model.orders[0].quantity == quantity
         assert model.orders[0].revenue == revenue
+
+    @qase.id(6)
+    @qase.title("Get Orders w/ custom params - get zero orders")
+    @pytest.mark.smoke
+    def test_get_0_orders(self, dashboard_api):
+        page_default = 1
+        per_page_default = 20
+        order_date = "2024-01-05"
+        status = "refunded"
+        expected_orders = 0
+
+        response = dashboard_api.get_orders(params={"start_date": order_date,
+                                                    "end_date": order_date,
+                                                    "status": status,
+                                                    "page_default": page_default,
+                                                    "per_page_default": per_page_default})
+
+        model = OrdersResponse(**response.json())
+        assert response.status_code == 200
+        assert model.page == page_default
+        assert model.per_page == per_page_default
+        assert len(model.orders) == expected_orders
