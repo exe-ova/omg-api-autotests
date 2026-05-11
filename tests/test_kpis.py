@@ -34,3 +34,20 @@ class TestGetKPIs:
         assert model.total_orders == expected_total_orders
         assert model.total_revenue == expected_total_revenue
         assert model.avg_order_value == expected_avg_order_value
+
+    @qase.id(3)
+    @qase.title("Get KPIs w/ date params - get zero orders")
+    @pytest.mark.smoke
+    def test_get_kpis_and_get_zeros(self, dashboard_api):
+        date = "2024-01-02"
+        expected_total_orders = 0
+        expected_total_revenue = 0
+        expected_avg_order_value = 0
+
+        response = dashboard_api.get_kpis(params={"start_date": date, "end_date": date})
+
+        model = KPIsResponse(**response.json())
+        assert response.status_code == 200
+        assert model.total_orders == expected_total_orders
+        assert model.total_revenue == expected_total_revenue
+        assert model.avg_order_value == expected_avg_order_value
