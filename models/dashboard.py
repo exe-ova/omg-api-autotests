@@ -24,7 +24,7 @@ class OrdersResponse(BaseModel):
     per_page: int
 
 class RevenueChartItem(BaseModel):
-    month: date
+    month: str
     revenue: float
 
 RevenueChartResponse = List[RevenueChartItem]
