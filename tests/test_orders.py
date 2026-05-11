@@ -4,7 +4,7 @@ from clients.http_client import log_request
 from models.dashboard import KPIsResponse, OrdersResponse
 
 
-class TestGetKPIs:
+class TestGetOrders:
 
     @qase.id(4)
     @qase.title("Get Orders w/ default params - get first 20 orders")
