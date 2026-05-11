@@ -32,3 +32,16 @@ class TestGetRevenueChart:
         model = adapter.validate_python(response.json())
         assert model[0].revenue == revenue
         assert model[0].month == date[:-3]
+
+    @qase.id(9)
+    @qase.title("Get Revenue Chart w/ date params - get empty chart")
+    @pytest.mark.smoke
+    def test_get_w_date_params_get_empty(self, dashboard_api):
+        date = "2024-01-02"
+
+        response = dashboard_api.get_revenue_chart(params={"start_date": date, "end_date": date})
+
+        assert response.status_code == 200
+        adapter = TypeAdapter(list[RevenueChartItem])
+        model = adapter.validate_python(response.json())
+        assert len(model) == 0
