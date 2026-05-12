@@ -12,4 +12,3 @@ To enable QASE integration:
   QASE_TESTOPS_PROJECT=..
 2. In the pytest.ini enable:
   addopts=..
-
