@@ -1,0 +1,51 @@
+name: Run Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "Scope тестов"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - smoke
+          - all
+
+  repository_dispatch:
+    types: [run-tests]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Resolve scope
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "scope=${{ github.event.inputs.scope }}" >> $GITHUB_OUTPUT
+          else
+            echo "scope=${{ github.event.client_payload.scope }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run tests
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
+          QASE_TESTOPS_PROJECT: ${{ secrets.QASE_TESTOPS_PROJECT }}
+          CI_RUNNER_NAME: GitHub-Actions
+        run: |
+          pytest -m ${{ steps.resolve.outputs.scope }} \
+                 --scope=${{ steps.resolve.outputs.scope }} \
+                 --qase-mode=testops
