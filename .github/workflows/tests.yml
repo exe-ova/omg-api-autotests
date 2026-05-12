@@ -46,6 +46,6 @@ jobs:
           QASE_TESTOPS_PROJECT: ${{ secrets.QASE_TESTOPS_PROJECT }}
           CI_RUNNER_NAME: GitHub-Actions
         run: |
-          pytest -m ${{ steps.resolve.outputs.scope }} \
+          python -m pytest -m ${{ steps.resolve.outputs.scope }} \
                  --scope=${{ steps.resolve.outputs.scope }} \
                  --qase-mode=testops
